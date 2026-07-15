@@ -11,10 +11,11 @@ const reader = stream.readable.getReader();
 let done = false;
 let output = "";
 while (!done) {
-  const result = await reader.read();
-  if (result.value) {
-    output += result.value;
+  const { value, done: isDone } = await reader.read();
+  done = isDone;
+  
+  if (value) {
+    output += value;
   }
-  done = result.done;
 }
 console.log(output); // 你好世(界)
